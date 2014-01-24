@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title>Angular Payments example</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">
+	<link href="credit-cards.css" rel="stylesheet">
+	<script type="text/javascript" src="https://js.balancedpayments.com/v1/balanced.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
+	
+	<!--
+    <script src="../src/module.js"></script>
+	<script src="../src/common.js"></script>
+	<script src="../src/format.js"></script>
+	<script src="../src/validate.js"></script>
+	<script src="../src/cards.js"></script>
+	<script src="../src/stripeForm.js"></script>
+	<script src="../src/balancedForm.js"></script>
+   -->
+		
+   <!--<script src="../lib/angular-payments.js"></script>-->
+    <script src="../lib/angular-payments.min.js"></script>
+    
+    <script>
+
+	balanced.init( 'PUT YOUR BALANCED MARKETPLACE URI HERE' );
+
+
+    angular.module('app', ['angularPayments'])
+	
+    MainController = function( $scope, $log )
+	{
+      $scope.handleBalanced = function(status, response)
+	  {
+		  $log.info( status );
+		  $log.info( response );
+      }
+    }
+
+    </script>
+
+
+
+  </head>
+  <body ng-app="app">
+
+    <div class="container" ng-controller="MainController">
+
+      <div class="row">
+        <div class="span4 offset4">
+          <div class="row">
+            
+            <div class="span4">
+              <h3>Yes. Money goes in the form.</h3>
+			  <h4>Balanced</h4>
+            </div>
+            
+            <form balanced-form="handleBalanced" name="myForm">
+
+              <div class="span3">
+                <label for="">Card number</label>
+                <input type="text" name="number" class="input-block-level" ng-model="number" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="myForm.number.$card.type"/>
+              </div>
+              
+              <div class="span1">
+                <label for="">Expiry</label>
+                <input type="text" class="input-block-level" ng-model="expiry" payments-validate="expiry" payments-format="expiry" />
+              </div>
+              
+              <div class="span3">
+                <label for="">Name on card </label>
+                <input type="text" class="input-block-level" ng-model="name">
+              </div>
+              
+              <div class="span1">
+                <label for="">CVC</label>
+                <input type="text" class="input-block-level" ng-model="cvc" payments-validate="cvc" payments-format="cvc" payments-type-model="type"/>
+              </div>
+              
+              <div class="span4">
+                <button type="submit" class="btn btn-primary btn-large">Submit</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>

@@ -1,6 +1,6 @@
 # Angular Payments
 
-An Angular Module that provides directives for *formatting* and *validating* forms related to payments. Also, it ships with a directive that makes it easy to integrate with Stripe's wonderful stripe.js.
+An Angular Module that provides directives for *formatting* and *validating* forms related to payments. Also, it ships with directives that makes it easy to integrate with both Stripe and Balanced via stripe.js and balanced.js respectively.
 
 ### Credits
 
@@ -17,7 +17,7 @@ To use Angular Payments, add angularPayments as a dependency to your AngularJS m
 Angular Payments it self depends on 2 libraries:
 
 1. Angular (d'oh)
-2. Stripe.js (https://stripe.com/docs/stripe.js)
+2. Stripe.js (https://stripe.com/docs/stripe.js) or Balanced (https://js.balancedpayments.com/v1/balanced.js)
 
 Be sure to also configure Stripe by setting your publishable key, something like:
 
@@ -25,8 +25,15 @@ Be sure to also configure Stripe by setting your publishable key, something like
 	<script>
 		Stripe.setPublishableKey('YOUR_PUBLISHABLE_KEY');
 	</script>
+	
+	or
+	
+	<script type="text/javascript" src="https://js.balancedpayments.com/v1/balanced.js"></script>
+    <script>
+		balanced.init( 'PUT YOUR BALANCED MARKETPLACE URI HERE' );
+	</script>
 
-The module ships 3 directives, all of which should be added as attributes to elements. 
+The module ships 4 directives, all of which should be added as attributes to elements. 
 
 ### paymentsValidate
 
@@ -107,6 +114,12 @@ Intercepts form-submission, obtains stripeToken and then fires a callback. Essen
 	<form stripe-form="CALLBACK"> 
 	...
 	</form>
+	
+	<form balanced-form="CALLBACK"> 
+	...
+	</form>
+	
+	
 
 Instead of sending the form and annotating it with data-stripe -attributes, you should use form's scope, i.e. attach values to form field's using ng-model. Values that are in the scope and that match to values that Stripe accepts, are sent. So if in addition to the formattable and validateable fields you want to send `address_state`, just add `<input type="text" ng-model="addressState" />` to your form.
 
@@ -114,18 +127,23 @@ Instead of sending the form and annotating it with data-stripe -attributes, you 
 
 When Stripe responds, it passes results to a callback function, which could be:
 
-	$scope.handleStripe = function(status, response){
+	$scope.handleCard = function(status, response){
 		if(response.error) {
 			// there was an error. Fix it.
 		} else {
 			// got stripe token, now charge it or smt
-			token = response.id
+			// token = response.id
+			// or
+			// got balanced card uri
+			// card_uri = response.uri
 		}
 	}
+	
+	
 
 And then:
 
-	<form stripe-form="handleStripe">
+	<form stripe-form="handleCard">
 	...
 
 Basically the directive sends the credit card details directly to stripe, which then returns a token that you can use to charge the card, subscribe a user or to do other things. This ensures that the card details themselves never hit your backend and thus you have to worry a little bit less.

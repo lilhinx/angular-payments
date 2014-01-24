@@ -12,7 +12,8 @@ module.exports = function(grunt) {
               'src/cards.js',
               'src/format.js',
               'src/validate.js',
-              'src/form.js'],
+              'src/stripeForm.js',
+			  'src/balancedForm.js'],
         dest: 'lib/<%= pkg.name %>.js'
       }
     },
