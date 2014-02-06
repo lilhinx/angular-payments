@@ -23,7 +23,7 @@
     
     <script>
 
-	balanced.init( 'PUT YOUR BALANCED MARKETPLACE URI HERE' );
+	balanced.init( 'BALANCED URI HERE' );
 
 
     angular.module('app', ['angularPayments'])
@@ -53,32 +53,28 @@
             <div class="span4">
               <h3>Yes. Money goes in the form.</h3>
 			  <h4>Balanced</h4>
+			  <h5>Form invalid: {{myForm.$invalid}}</h5>
             </div>
             
             <form balanced-form="handleBalanced" name="myForm">
 
               <div class="span3">
                 <label for="">Card number</label>
-                <input type="text" name="number" class="input-block-level" ng-model="number" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="myForm.number.$card.type"/>
+                <input type="text" name="number" class="input-block-level" ng-model="number" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="myForm.number.$card.type" ng-required/>
               </div>
               
               <div class="span1">
                 <label for="">Expiry</label>
-                <input type="text" class="input-block-level" ng-model="expiry" payments-validate="expiry" payments-format="expiry" />
-              </div>
-              
-              <div class="span3">
-                <label for="">Name on card </label>
-                <input type="text" class="input-block-level" ng-model="name">
+                <input type="text" name="expiry" class="input-block-level" ng-model="expiry" payments-validate="expiry" payments-format="expiry" ng-required/>
               </div>
               
               <div class="span1">
                 <label for="">CVC</label>
-                <input type="text" class="input-block-level" ng-model="cvc" payments-validate="cvc" payments-format="cvc" payments-type-model="type"/>
+                <input type="text" name="cvc" class="input-block-level" ng-model="cvc" payments-validate="cvc" payments-format="cvc" payments-type-model="type" ng-required/>
               </div>
               
               <div class="span4">
-                <button type="submit" class="btn btn-primary btn-large">Submit</button>
+                <button ng-disabled="myForm.$invalid" type="submit" class="btn btn-primary btn-large">Submit</button>
               </div>
             </form>
 
