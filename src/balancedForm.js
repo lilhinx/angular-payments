@@ -69,7 +69,7 @@ angular.module('angularPayments')
 			    expiration_year: dataToSend.exp_year,
 			    security_code: dataToSend.cvc,
 				name: dataToSend.name,
-				postal_code: dataToSend.addressZip
+				postal_code: dataToSend.address_zip
 			 };
 			
 			balanced.card.create( creditCardData, function() 
