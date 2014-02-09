@@ -2,7 +2,7 @@ angular.module('angularPayments')
 
 
 
-.factory('_Validate', ['Cards', 'Common', '$parse', function(Cards, Common, $parse){
+.factory('_Validate', ['Cards', 'Common', '$parse', '$log', function(Cards, Common, $parse, $log){
 
   var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; }
 
@@ -38,8 +38,11 @@ angular.module('angularPayments')
   _validators['cvc'] = function(cvc, ctrl, scope, attr){
       var ref, ref1;
 
-      // valid if empty - let ng-required handle empty
-      if(cvc == null || cvc.length == 0) return true;
+      // invalid if empty, as this function is called when payment type model changes
+      if(cvc == null || cvc.length == 0)
+	  {
+		  return false;
+	  }
 
       if (!/^\d+$/.test(cvc)) {
         return false;
@@ -159,7 +162,7 @@ angular.module('angularPayments')
 }])
 
 
-.factory('_ValidateWatch', ['_Validate', function(_Validate){
+.factory('_ValidateWatch', ['_Validate', '$log', function(_Validate, $log){
 
     var _validatorWatches = {}
 
@@ -192,8 +195,12 @@ angular.module('angularPayments')
       _ValidateWatch(type, ctrl, scope, attr);
 
       var validateFn = function(val) {
-          var valid = _Validate(type, val, ctrl, scope, attr);
-          ctrl.$setValidity(type, valid);
+		  var valid = _Validate(type, val, ctrl, scope, attr);
+		  if( val == undefined || val == "" )
+		  {
+			  valid = false;
+		  }
+		  ctrl.$setValidity(type, valid);
           return valid ? val : undefined;
       };
 
