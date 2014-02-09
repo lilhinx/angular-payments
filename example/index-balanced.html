@@ -18,12 +18,12 @@
 	<script src="../src/balancedForm.js"></script>
    -->
 		
-   <!--<script src="../lib/angular-payments.js"></script>-->
-    <script src="../lib/angular-payments.min.js"></script>
+	<script src="../lib/angular-payments.js"></script>
+	<!--<script src="../lib/angular-payments.min.js"></script>-->
     
-    <script>
+    <script type="text/javascript">
 
-	balanced.init( 'PUT YOUR BALANCED MARKETPLACE URI HERE' );
+	balanced.init( 'BALANCED MARKETPLACE URI HERE' );
 
 
     angular.module('app', ['angularPayments'])
@@ -56,6 +56,11 @@
             </div>
             
             <form balanced-form="handleBalanced" name="myForm">
+				
+                <div class="span3">
+                  <label for="">Name on card </label>
+                  <input type="text" class="input-block-level" ng-model="name">
+                </div>
 
               <div class="span3">
                 <label for="">Card number</label>
@@ -67,14 +72,16 @@
                 <input type="text" class="input-block-level" ng-model="expiry" payments-validate="expiry" payments-format="expiry" />
               </div>
               
-              <div class="span3">
-                <label for="">Name on card </label>
-                <input type="text" class="input-block-level" ng-model="name">
-              </div>
+             
               
               <div class="span1">
                 <label for="">CVC</label>
                 <input type="text" class="input-block-level" ng-model="cvc" payments-validate="cvc" payments-format="cvc" payments-type-model="type"/>
+              </div>
+			  
+              <div class="span1">
+                <label for="">Billing Zip Code</label>
+                <input type="text" class="input-block-level" ng-model="addressZip"/>
               </div>
               
               <div class="span4">
