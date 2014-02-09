@@ -23,7 +23,7 @@
     
     <script type="text/javascript">
 
-	balanced.init( 'BALANCED MARKETPLACE URI HERE' );
+	balanced.init( 'PAYMENTS URI HERE' );
 
 
     angular.module('app', ['angularPayments'])
@@ -81,7 +81,7 @@
 			  
               <div class="span1">
                 <label for="">Billing Zip Code</label>
-                <input type="text" class="input-block-level" ng-model="addressZip"/>
+                <input type="text" class="input-block-level" ng-model="addressZip" payments-validate="zip" payments-format="zip" ng-required/>
               </div>
               
               <div class="span4">
