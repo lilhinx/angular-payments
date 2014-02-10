@@ -147,7 +147,7 @@ angular.module('angularPayments')
 		// valid if empty - let ng-required handle empty
 		if( val == null || val.length == 0 ) 
 		{
-			return true;
+			return false;
 		}
 		
 		if( !/^\d{5}$/.test( val ) )
