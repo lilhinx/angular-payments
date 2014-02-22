@@ -44,8 +44,10 @@ angular.module('angularPayments')
 			var typeModel = $parse( attr.paymentsTypeModel );
 			type = typeModel( scope );
 		}
+		
 		if( type )
 		{
+			var c =  Cards.fromType( type );
 			return ref = cvc.length, __indexOf.call((ref1 = Cards.fromType(type)) != null ? ref1.cvcLength : void 0, ref) >= 0;
 		} 
 		else 
